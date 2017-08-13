@@ -3,6 +3,31 @@ Self-Driving Car Engineer Nanodegree Program
 
 ---
 
+## Reflection
+日本語で失礼します。
+PID コントローラにおける各種パラメータについて説明いたします。
+まず Propotional Control パラメータについてですが、このパラメータは Cross Track Error から算出されます。このパラメータは Cross Track Error の逆側の方向に車を動かすように、コントローラーに入力されます。
+Propotional パラメータで制御した車の動画です。
+
+[Propotional パラメータで制御された車](https://github.com/vilion/CarND-PID-Control-Project/blob/master/movie/propotional_only.mov)
+
+動画内では車の起動は左右に振れています。スピードが早くなるにつれ、振れは大きくなり車線から外れます。
+
+そこにCross Track Error の変化量を加味してコントロールを補正する Deriviation パラメータを付加します。
+
+[Deriviation パラメータで制御された車](https://github.com/vilion/CarND-PID-Control-Project/blob/master/movie/deriv_parameter.m4v)
+
+Deriviation パラメータを使うことで、車が車線に入る前に補正がかかり、車線をオーバーすることが無くなります。
+ただ、入力の誤差があるため、完全には車線をたどれていないです。
+そこで、Integration パラメータを用いて補正します。
+これは、cte の総計に係数をかけた物です。
+
+[Integration パラメータで制御された車](https://github.com/vilion/CarND-PID-Control-Project/blob/master/movie/integral.m4v)
+
+以上、Cross Track Erro から導き出される３つのパラメータを用いて車をコントロールして車線をたどらせるのが PID Controler で用いられる手法です。
+
+なおシミュレーターを介した twiddle の実装方法がわからなかったため、マニュアルでパラメータを調整しました。
+
 ## Dependencies
 
 * cmake >= 3.5
@@ -19,7 +44,7 @@ Self-Driving Car Engineer Nanodegree Program
   * Run either `./install-mac.sh` or `./install-ubuntu.sh`.
   * If you install from source, checkout to commit `e94b6e1`, i.e.
     ```
-    git clone https://github.com/uWebSockets/uWebSockets 
+    git clone https://github.com/uWebSockets/uWebSockets
     cd uWebSockets
     git checkout e94b6e1
     ```
@@ -33,7 +58,7 @@ There's an experimental patch for windows in this [PR](https://github.com/udacit
 1. Clone this repo.
 2. Make a build directory: `mkdir build && cd build`
 3. Compile: `cmake .. && make`
-4. Run it: `./pid`. 
+4. Run it: `./pid`.
 
 ## Editor Settings
 
