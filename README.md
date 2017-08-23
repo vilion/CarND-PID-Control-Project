@@ -4,29 +4,36 @@ Self-Driving Car Engineer Nanodegree Program
 ---
 
 ## Reflection
-日本語で失礼します。
-PID コントローラにおける各種パラメータについて説明いたします。
-まず Propotional Control パラメータについてですが、このパラメータは Cross Track Error から算出されます。このパラメータは Cross Track Error の逆側の方向に車を動かすように、コントローラーに入力されます。
-Propotional パラメータで制御した車の動画です。
+I explain each parameters for PID controller.
 
-[Propotional パラメータで制御された車](https://github.com/vilion/CarND-PID-Control-Project/blob/master/movie/propotional_only.mov)
+### Propotional Control parameter
+First, I will explain about Propotional Control parameter, this parameter is calculated by Track Error.
+This Parameter is input to controller to move the car to opposite direction of cross track error.
+This link is the movie of the car controlled by the Propotional parameter.
 
-動画内では車の起動は左右に振れています。スピードが早くなるにつれ、振れは大きくなり車線から外れます。
+[the car controlled by Propotional parameter](https://github.com/vilion/CarND-PID-Control-Project/blob/master/movie/propotional_only.mov)
 
-そこにCross Track Error の変化量を加味してコントロールを補正する Deriviation パラメータを付加します。
+In the movie, the car's trajectory goes left and right, and as speed become high, the deviation become large, and finally the car goes out of lane.
 
-[Deriviation パラメータで制御された車](https://github.com/vilion/CarND-PID-Control-Project/blob/master/movie/deriv_parameter.m4v)
+### Deriviation parameter
+Then I use Deriviation parameter to revise the move of the car.
+The Derivation parameter is calculated by the change amount per time of Cross Track Error.
 
-Deriviation パラメータを使うことで、車が車線に入る前に補正がかかり、車線をオーバーすることが無くなります。
-ただ、入力の誤差があるため、完全には車線をたどれていないです。
-そこで、Integration パラメータを用いて補正します。
-これは、cte の総計に係数をかけた物です。
+[the car controlled by Derivation parameter](https://github.com/vilion/CarND-PID-Control-Project/blob/master/movie/deriv_parameter.m4v)
 
-[Integration パラメータで制御された車](https://github.com/vilion/CarND-PID-Control-Project/blob/master/movie/integral.m4v)
+By using Deriviation parameter, before the car move on to center of lane, the trajectory of the car is revised. so the trajectory become more gentle.
+But because of the error in the input of controller, the trajectory is
+not totally following the center of the lane.
 
-以上、Cross Track Erro から導き出される３つのパラメータを用いて車をコントロールして車線をたどらせるのが PID Controler で用いられる手法です。
+### Integration parameter
+Then I use Integration parameter to revise the trajectory.
+This parameter is sum of CTE multiplied by some number.
 
-なおシミュレーターを介した twiddle の実装方法がわからなかったため、マニュアルでパラメータを調整しました。
+[the car controlled by Integration parameter](https://github.com/vilion/CarND-PID-Control-Project/blob/master/movie/integral.m4v)
+
+Above is the method used in the PID Controller to trace the lane using the three parameters calculated from Cross Track Error.
+
+Since I did not know how to implement twiddle via the simulator, I adjusted the parameters manually.
 
 ## Dependencies
 
